@@ -1,0 +1,33 @@
+PODS:
+  - Flutter (1.0.0)
+  - flutter_free_streamer (0.0.1):
+    - Flutter
+    - FreeStreamer
+  - FreeStreamer (3.9.3):
+    - Reachability (~> 3.0)
+  - Reachability (3.2)
+
+DEPENDENCIES:
+  - Flutter (from `.symlinks/flutter/ios`)
+  - flutter_free_streamer (from `.symlinks/plugins/flutter_free_streamer/ios`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - FreeStreamer
+    - Reachability
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: ".symlinks/flutter/ios"
+  flutter_free_streamer:
+    :path: ".symlinks/plugins/flutter_free_streamer/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
+  flutter_free_streamer: a21e3d517777dacd65cf87070605cfa07a69d7d4
+  FreeStreamer: 8d52b299dc97e557ff156480bf86a666165bd1e5
+  Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
+
+PODFILE CHECKSUM: b7d0755641915265774624f3b3be49c5c073d379
+
+COCOAPODS: 1.5.3
