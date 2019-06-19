@@ -71,7 +71,7 @@ class _MyAppState extends State<MyApp> {
             ),
             FlatButton(
               onPressed: () async {
-                var result = await FlutterFreeStreamer.seek(11.55);
+                var result = await FlutterFreeStreamer.seek(10.058);
                 print(result);
               },
               child: Text('seek 10'),
