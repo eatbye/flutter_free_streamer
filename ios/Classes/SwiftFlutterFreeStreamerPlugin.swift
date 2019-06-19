@@ -54,11 +54,11 @@ public class SwiftFlutterFreeStreamerPlugin: NSObject, FlutterPlugin {
             return result(true)
         case "seek":
             let args = (call.arguments as! NSDictionary)
-            let time = args.object(forKey: "time") as! Float
+            let time = args.object(forKey: "time") as! Double
             let positionAll = audioPlayer.currentTimePlayed
             let duration = positionAll.playbackTimeInSeconds / positionAll.position
             var position = FSStreamPosition()
-            position.position = time / duration
+            position.position = Float(time) / duration
             audioPlayer.seek(to: position)
             return result(true)
         case "progress":
