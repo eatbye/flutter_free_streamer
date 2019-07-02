@@ -14,9 +14,16 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
 
+  var streamer = FlutterFreeStreamer((){
+    print('网络播放失败');
+  });
+
   @override
   void initState() {
     super.initState();
+
+    //FlutterFreeStreamer();
+
     initPlatformState();
   }
 
@@ -35,9 +42,12 @@ class _MyAppState extends State<MyApp> {
           children: <Widget>[
             FlatButton(
               onPressed: () async {
-                var result = await FlutterFreeStreamer.init('http://newconceptmp3.wordbye.com/1/en/E001.mp3');
+                var result = await streamer.init('http://newconceptmp3.wordbye.com/1/en/E001.mp3');
                 print(result);
-                await FlutterFreeStreamer.play();
+                var result1 = await streamer.play();
+
+                print('-----------------------------');
+                print(result1);
 //                new Timer(Duration(milliseconds: 300), (){
 //                  FlutterFreeStreamer.pause();
 //
@@ -48,44 +58,44 @@ class _MyAppState extends State<MyApp> {
             ),
             FlatButton(
               onPressed: () async {
-                var result = await FlutterFreeStreamer.init('assets/audio.mp3');
+                var result = await streamer.init('assets/audio.mp3');
                 print(result);
-                await FlutterFreeStreamer.play();
+                await streamer.play();
 
               },
               child: Text('播放本地'),
             ),
             FlatButton(
               onPressed: () async {
-                var result = await FlutterFreeStreamer.progress();
+                var result = await streamer.progress();
                 print(result);
               },
               child: Text('progress'),
             ),
             FlatButton(
               onPressed: () async {
-                var result = await FlutterFreeStreamer.duration();
+                var result = await streamer.duration();
                 print(result);
               },
               child: Text('duration'),
             ),
             FlatButton(
               onPressed: () async {
-                var result = await FlutterFreeStreamer.seek(10.058);
+                var result = await streamer.seek(7.058);
                 print(result);
               },
               child: Text('seek 10'),
             ),
             FlatButton(
               onPressed: () async {
-                var result = await FlutterFreeStreamer.isPlaying();
+                var result = await streamer.isPlaying();
                 print(result);
               },
               child: Text('isPlaying'),
             ),
             FlatButton(
               onPressed: () async {
-                var result = await FlutterFreeStreamer.state();
+                var result = await streamer.state();
                 print(result);
               },
               child: Text('state'),

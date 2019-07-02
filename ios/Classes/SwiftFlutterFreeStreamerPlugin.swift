@@ -21,6 +21,12 @@ public class SwiftFlutterFreeStreamerPlugin: NSObject, FlutterPlugin {
   }
 
   public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
+//    audioPlayer.onFailure = ((FSAudioStream, String){
+    
+//    });
+    audioPlayer.onFailure = self._errorStateChangeHandler();
+//    audioPlayer.onStateChange =
+    
     switch call.method {
         case "init":
             let args = (call.arguments as! NSDictionary)
@@ -80,6 +86,15 @@ public class SwiftFlutterFreeStreamerPlugin: NSObject, FlutterPlugin {
     private func _streamStateChangeHandler() -> (FSAudioStreamState) -> Void {
         return { state1 in
             self.state = state1.rawValue
+            self.channel.invokeMethod("audio.onState", arguments: self.state);
         }
+    }
+    
+    
+    private func _errorStateChangeHandler() -> (FSAudioStreamError, String?) -> Void {
+        return { error,string in
+            self.channel.invokeMethod("audio.onError", arguments: error.rawValue)
+        }
+        
     }
 }

@@ -1,17 +1,25 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/services.dart';
 
 class FlutterFreeStreamer {
-  static const MethodChannel _channel =
-      const MethodChannel('flutter_free_streamer');
+   MethodChannel _channel = const MethodChannel('flutter_free_streamer');
 
-  static Future<String> get platformVersion async {
-    final String version = await _channel.invokeMethod('getPlatformVersion');
-    return version;
+  VoidCallback onChange;
+
+
+  FlutterFreeStreamer(onChange){
+    _channel.setMethodCallHandler(_audioPlayerStateChange);
+    this.onChange = onChange;
   }
 
-  static Future<String> init(String url) async {
+//  Future<String> get platformVersion async {
+//    final String version = await _channel.invokeMethod('getPlatformVersion');
+//    return version;
+//  }
+
+  Future<String> init(String url) async {
     var isLocal = url.indexOf("://")==-1;
 
     final Map<String, dynamic> params = <String, dynamic>{
@@ -24,47 +32,47 @@ class FlutterFreeStreamer {
     return 'res';
   }
 
-  static Future<bool> play() async {
+  Future<bool> play() async {
     var res = await _channel.invokeMethod('play');
     return res;
   }
 
-  static Future<bool> pause() async {
+  Future<bool> pause() async {
     var res = await _channel.invokeMethod('pause');
     return res;
   }
 
-  static Future<bool> resume() async {
+  Future<bool> resume() async {
     var res = await _channel.invokeMethod('resume');
     return res;
   }
 
-  static Future<bool> stop() async {
+  Future<bool> stop() async {
     var res = await _channel.invokeMethod('stop');
     return res;
   }
 
-  static Future<double> progress() async {
+  Future<double> progress() async {
     var res = await _channel.invokeMethod('progress');
     return res;
   }
 
-  static Future<double> duration() async {
+  Future<double> duration() async {
     var res = await _channel.invokeMethod('duration');
     return res;
   }
 
-  static Future<double> getVolume() async {
+  Future<double> getVolume() async {
     var res = await _channel.invokeMethod('getVolume');
     return res;
   }
 
-  static Future<bool> isPlaying() async {
+  Future<bool> isPlaying() async {
     var res = await _channel.invokeMethod('isPlaying');
     return res;
   }
 
-  static Future<bool> seek(time) async {
+  Future<bool> seek(time) async {
     final Map<String, dynamic> params = <String, dynamic>{
       'time': time,
     };
@@ -74,9 +82,25 @@ class FlutterFreeStreamer {
   }
 
   // 3播放中;1播放完成
-  static Future<int> state() async {
+  Future<int> state() async {
     var res = await _channel.invokeMethod('state');
     return res;
+  }
+
+
+  Future<void> _audioPlayerStateChange(MethodCall call) async {
+    switch (call.method) {
+      case "audio.onError":
+        var message = call.arguments;
+        print(message);
+        onChange();
+        break;
+      case "audio.onState":
+        var message = call.arguments;
+        break;
+      default:
+        throw new ArgumentError('Unknown method ${call.method} ');
+    }
   }
 
 }
